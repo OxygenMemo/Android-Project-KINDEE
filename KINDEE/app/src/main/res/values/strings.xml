@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">KINDEE</string>
+    <string name="Editext_hit_search">โปรดใส่ข้อความเพื่อค้นหา</string>
+    <string name="Search">ค้นหา</string>
+    <string name="WhatToEat">กินอะไรดี</string>
+    <string name="FravoritRestu">ร้านโปรดของฉัน</string>
+    <string name="myRes">ร้านค้าของฉัน</string>
+</resources>

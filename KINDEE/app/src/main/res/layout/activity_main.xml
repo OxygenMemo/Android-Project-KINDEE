@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.apple.kindee.MainActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="30dp">
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_centerHorizontal="true"
+            android:text="@string/Search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="change"/>
+        
+        <Button
+            android:id="@+id/btn2"
+            android:layout_below="@id/btn1"
+            android:text="@string/WhatToEat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn3"
+            android:layout_below="@id/btn2"
+            android:text="@string/FravoritRestu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn4"
+            android:layout_below="@id/btn3"
+            android:text="@string/myRes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
