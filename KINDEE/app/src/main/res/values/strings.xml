@@ -4,4 +4,9 @@
     <string name="Username">Username</string>
     <string name="Password">Password</string>
     <string name="Register">Register</string>
+    <string name="Fname">First name</string>
+    <string name="Lname">Last name</string>
+    <string name="RePassword">Re Password</string>
+    <string name="ok">OK</string>
+
 </resources>

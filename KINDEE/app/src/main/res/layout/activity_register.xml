@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="50dp">
+
+    <RelativeLayout
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:id="@+id/tv_Register_register"
+            android:text="@string/Register"
+            android:textSize="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/layout_contrainer_Username_register"
+            android:layout_below="@id/tv_Register_register"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/Username"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/edt_Username_register"
+                android:layout_marginLeft="30dp"
+                android:layout_width="140dp"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_contrainer_password_register"
+            android:layout_below="@id/layout_contrainer_Username_register"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/Password"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/edt_password_register"
+                android:layout_marginLeft="30dp"
+                android:layout_width="140dp"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_contrainer_repassword_register"
+            android:layout_below="@id/layout_contrainer_password_register"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/RePassword"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/edt_repassword_register"
+                android:layout_marginLeft="5dp"
+                android:layout_width="140dp"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_contrainer_fname_register"
+            android:layout_below="@id/layout_contrainer_repassword_register"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/Fname"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/edt_fname_register"
+                android:layout_marginLeft="30dp"
+                android:layout_width="140dp"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_contrainer_lname_register"
+            android:layout_below="@id/layout_contrainer_fname_register"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/Lname"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/edt_lname_register"
+                android:layout_marginLeft="30dp"
+                android:layout_width="140dp"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+        <Button
+            android:text="@string/ok"
+            android:layout_marginTop="25dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_below="@id/layout_contrainer_lname_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="register"/>
+    </RelativeLayout>
+</RelativeLayout>
