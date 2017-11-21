@@ -12,13 +12,13 @@ import com.example.apple.kindee.R;
  */
 
 public class ListSearchActivity extends Activity {
-    TextView tv_head = (TextView) findViewById(R.id.tv_header_listsearch);
+    TextView tv_head;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listsearch);
         Bundle bundle = getIntent().getExtras();
-
+        tv_head = (TextView) findViewById(R.id.tv_header_listsearch);
         tv_head.setText("ค้นหา : "+bundle.getString("search"));
 
 
