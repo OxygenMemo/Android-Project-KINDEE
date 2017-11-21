@@ -41,6 +41,8 @@
 
         <EditText
             android:id="@+id/edt_Username_login"
+            android:ems="10"
+            android:inputType="textPersonName"
             android:layout_marginLeft="30dp"
             android:layout_width="140dp"
             android:layout_height="40dp" />
@@ -62,6 +64,7 @@
 
         <EditText
             android:id="@+id/edt_Password_login"
+            android:ems="10"
             android:inputType="textPassword"
             android:layout_marginLeft="30dp"
             android:layout_width="140dp"
@@ -85,7 +88,7 @@
             android:onClick="callRegister"
             />
         <Button
-
+            android:onClick="login"
             android:text="@string/Login"
             android:textSize="13.5dp"
             android:layout_marginLeft="130dp"

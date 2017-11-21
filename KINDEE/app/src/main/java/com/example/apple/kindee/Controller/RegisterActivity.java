@@ -1,4 +1,4 @@
-package com.example.apple.kindee;
+package com.example.apple.kindee.Controller;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.apple.kindee.Model.Result;
+import com.example.apple.kindee.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -43,7 +45,7 @@ public class RegisterActivity extends Activity {
         if(checkRequiredInfo(edt_username,edt_password,edt_repassword,edt_fname,edt_lname)) {
             String url = "http://angsila.cs.buu.ac.th/~58160698/KINDEE_API/KINDEE/index.php/Register_controller/Register";
 
-            register(url,edt_username.getText().toString(),edt_password.getText().toString(),edt_fname.getText().toString(),edt_lname.getText().toString());
+            registerCallApi(url,edt_username.getText().toString(),edt_password.getText().toString(),edt_fname.getText().toString(),edt_lname.getText().toString());
             //getJsonFromUrl(url);
 
             //Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -71,7 +73,7 @@ public class RegisterActivity extends Activity {
     }
 
 
-    private void register(String URL, final String username, final String password, final String fname, final String lname) {
+    private void registerCallApi(String URL, final String username, final String password, final String fname, final String lname) {
         RequestQueue queue = Volley.newRequestQueue(this);
         final TextView tv= (TextView) findViewById(R.id.tv_Register_register);
 
@@ -89,11 +91,14 @@ public class RegisterActivity extends Activity {
                             Result result = gson.fromJson(response.toString(),Result.class);
 
                             //tv.setText(result.result+"");
-                            if(result.result){
-                                Toast.makeText(getBaseContext(),"Register complete",Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(getBaseContext(),"Register fail username repect",Toast.LENGTH_SHORT).show();
-                            }
+
+                                if (result.result) {
+                                    Toast.makeText(getBaseContext(), "Register complete", Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    Toast.makeText(getBaseContext(), "Register fail username repect", Toast.LENGTH_SHORT).show();
+                                }
+
 
                         }catch (Exception e){
                             Toast.makeText(getBaseContext(),"fail other case",Toast.LENGTH_SHORT).show();
@@ -105,7 +110,7 @@ public class RegisterActivity extends Activity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        tv.setText(error.toString());
+                        Toast.makeText(getBaseContext(),"internet not connect",Toast.LENGTH_SHORT).show();
                     }
                 }
         ) {
@@ -124,6 +129,8 @@ public class RegisterActivity extends Activity {
         queue.add(postRequest);
 
     }
+    
+
 
     private boolean checkRequiredInfo(EditText edt_username,EditText edt_password,EditText edt_repassword,EditText edt_fname,EditText edt_lname){
         boolean check=true;

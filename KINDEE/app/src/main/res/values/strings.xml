@@ -9,4 +9,14 @@
     <string name="RePassword">Re Password</string>
     <string name="ok">OK</string>
 
+    <string name="WhatToEat">กินอะไรดี</string>
+    <string name="FavoriteRes">ร้านโปรดของฉัน</string>
+    <string name="addRes">เพิ่มร้าน</string>
+    <string name="UploadImage">UploadImg</string>
+    <string name="title_activity_maps_upload">Map</string>
+    <string name="Input_Resturantname">ชื่อร้าน</string>
+    <string name="selectImg">Select Image</string>
+    <string name="Type">ประเภท</string>
+    <string name="search">ค้นหาร้านอาหารที่ชอบ</string>
 </resources>
+

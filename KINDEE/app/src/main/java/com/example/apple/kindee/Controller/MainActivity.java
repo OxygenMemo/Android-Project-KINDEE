@@ -1,9 +1,11 @@
-package com.example.apple.kindee;
+package com.example.apple.kindee.Controller;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.apple.kindee.R;
 
 public class MainActivity extends AppCompatActivity {
     private Handler mHandler = new Handler();

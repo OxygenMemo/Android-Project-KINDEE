@@ -35,6 +35,8 @@
 
             <EditText
                 android:id="@+id/edt_Username_register"
+                android:ems="10"
+                android:inputType="textPersonName"
                 android:layout_marginLeft="30dp"
                 android:layout_width="140dp"
                 android:layout_height="40dp" />
@@ -57,9 +59,12 @@
 
             <EditText
                 android:id="@+id/edt_password_register"
+                android:ems="10"
+                android:inputType="textPassword"
                 android:layout_marginLeft="30dp"
                 android:layout_width="140dp"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                />
 
         </LinearLayout>
         <LinearLayout
@@ -79,6 +84,8 @@
 
             <EditText
                 android:id="@+id/edt_repassword_register"
+                android:ems="10"
+                android:inputType="textPassword"
                 android:layout_marginLeft="5dp"
                 android:layout_width="140dp"
                 android:layout_height="40dp" />
@@ -101,6 +108,8 @@
 
             <EditText
                 android:id="@+id/edt_fname_register"
+                android:ems="10"
+                android:inputType="textPersonName"
                 android:layout_marginLeft="30dp"
                 android:layout_width="140dp"
                 android:layout_height="40dp" />
@@ -123,6 +132,8 @@
 
             <EditText
                 android:id="@+id/edt_lname_register"
+                android:ems="10"
+                android:inputType="textPersonName"
                 android:layout_marginLeft="30dp"
                 android:layout_width="140dp"
                 android:layout_height="40dp" />

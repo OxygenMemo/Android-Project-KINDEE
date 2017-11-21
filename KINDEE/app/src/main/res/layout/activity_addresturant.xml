@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="50dp">
+    <TextView android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_Img_addresturant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimaryDark" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SELECTIMAGE"
+                android:id="@+id/buttonSelect"
+                />
+            <Button
+                android:text="map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="callMapUpload"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_Resname_addresturant"
+            android:layout_below="@id/layout_Img_addresturant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="@string/Input_Resturantname"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/edt_Resname_Addresturant"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_marginLeft="30dp"
+                android:layout_width="140dp"
+                android:layout_height="40dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:id="@+id/layout_Type_addresturant"
+            android:layout_below="@id/layout_Resname_addresturant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="@string/Type"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_marginLeft="30dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:id="@+id/layout_comment_addresturant"
+            android:layout_below="@id/layout_Type_addresturant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="รายระเอียด"/>
+
+            <EditText
+                android:id="@+id/edt_comment_addresturant"
+                android:layout_marginLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="CLICK HERE TO UPLOAD SELECTED IMAGE ON SERVER "
+            android:id="@+id/buttonUpload"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextImageName"
+            android:layout_above="@+id/buttonUpload"
+            android:layout_centerHorizontal="true"
+            android:hint="Enter Image Name Here"
+            android:gravity="center"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

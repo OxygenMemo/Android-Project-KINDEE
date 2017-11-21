@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="50dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_WhatToEat_home"
+            android:textSize="25dp"
+            android:text="@string/WhatToEat"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_search_home"
+            android:layout_below="@id/btn_WhatToEat_home"
+            android:textSize="25dp"
+            android:text="ค้าหาร้านอาหาร"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="callSearchActivity"/>
+
+        <Button
+            android:id="@+id/btn_FavoriteRes_home"
+            android:layout_below="@id/btn_search_home"
+            android:textSize="25dp"
+            android:text="@string/FavoriteRes"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_addRes_home"
+            android:layout_below="@id/btn_FavoriteRes_home"
+            android:textSize="25dp"
+            android:text="@string/addRes"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="callAddresturant"/>
+
+
+    </RelativeLayout>
+</RelativeLayout>
