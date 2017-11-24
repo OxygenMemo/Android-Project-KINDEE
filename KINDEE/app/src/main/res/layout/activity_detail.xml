@@ -41,26 +41,92 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/layout_Res_rate_map_detail"
         android:layout_below="@id/layout_header_detail"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Spinner
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="15dp"/>
+        <TextView
+            android:id="@+id/tv_Ras_rate_detail"
+            android:text="คะแนน"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <ImageView
             android:src="@drawable/ic_icons8_google_maps"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="30dp"
+            android:onClick="callMapDetailSearch"
             />
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/layout_Rate_detail"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/layout_Res_rate_map_detail"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="16dp"
+            android:id="@+id/tv_Rate_detail"
+            android:text="ให้คะแนน"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:id="@+id/spinner_rate_detail"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"/>
+        <Button
+            android:text="ให้คะแนน"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_Comment_detail"
+        android:layout_below="@id/layout_Rate_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <TextView
+            android:text="Comment"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <EditText
+                android:id="@+id/edt_comment_detail"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_marginLeft="30dp"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                android:hint="โปรใส่ข้อความ"/>
+
+            <Button
+                android:text="ส่ง"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="addComment"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cv_listcomment_detail"
+        android:layout_below="@id/layout_Comment_detail"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 
 </RelativeLayout>

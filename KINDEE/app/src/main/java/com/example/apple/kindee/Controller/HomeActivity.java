@@ -34,6 +34,8 @@ public class HomeActivity extends Activity {
     }
     public void callSearchActivity(View view){
         Intent i = new Intent(this,SearchActivity.class);
+        i.putExtra("User_id",User_id);
+        i.putExtra("User_fullname",User_fullname);
         startActivity(i);
     }
 

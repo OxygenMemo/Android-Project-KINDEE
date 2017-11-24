@@ -22,8 +22,11 @@ public class SearchActivity extends Activity {
         edt_search =  (EditText) findViewById(R.id.edt_search_search);
     }
     public void callListSearchActivity(View v){
+        Bundle bd=getIntent().getExtras();
         Intent i = new Intent(this,ListSearchActivity.class);
         i.putExtra("search",edt_search.getText().toString());
+        i.putExtra("User_id",bd.getInt("User_id"));
+
         startActivity(i);
     }
 }

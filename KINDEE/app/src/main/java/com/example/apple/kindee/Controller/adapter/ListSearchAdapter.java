@@ -1,4 +1,4 @@
-package com.example.apple.kindee.Controller;
+package com.example.apple.kindee.Controller.adapter;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.apple.kindee.Controller.DetailActivity;
 import com.example.apple.kindee.Model.Resturant;
+import com.example.apple.kindee.Model.User;
 import com.example.apple.kindee.R;
 
 import java.io.InputStream;
@@ -25,6 +27,7 @@ import java.net.URL;
 public class ListSearchAdapter extends RecyclerView.Adapter<ListSearchAdapter.ViewHolder> {
     private Resturant[] mDataset;
     private TextView tv;
+    private int User_id;
 
     private View.OnClickListener onclick;
     // Provide a reference to the views for each data item
@@ -46,9 +49,9 @@ public class ListSearchAdapter extends RecyclerView.Adapter<ListSearchAdapter.Vi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ListSearchAdapter(Resturant[] myDataset) {
+    public ListSearchAdapter(Resturant[] myDataset,int user_id) {
         mDataset = myDataset;
-
+        this.User_id= user_id;
 
     }
 
@@ -82,6 +85,7 @@ public class ListSearchAdapter extends RecyclerView.Adapter<ListSearchAdapter.Vi
             public void onClick(View v) {
                 //Toast.makeText(v.getContext(),mDataset[position].Res_name,Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(v.getContext(),DetailActivity.class);
+                i.putExtra("Res_id",mDataset[position].Res_id);
                 i.putExtra("Res_name",mDataset[position].Res_name);
                 i.putExtra("Res_detail",mDataset[position].Res_detail);
                 i.putExtra("Res_latitude",mDataset[position].Res_latitude);
@@ -89,6 +93,7 @@ public class ListSearchAdapter extends RecyclerView.Adapter<ListSearchAdapter.Vi
                 i.putExtra("Type_id",mDataset[position].Type_id);
                 i.putExtra("Type_name",mDataset[position].Type_name);
                 i.putExtra("Res_img_path",mDataset[position].Res_img_path);
+                i.putExtra("User_id", User_id);
                 v.getContext().startActivity(i);
             }
         });

@@ -1,8 +1,9 @@
-package com.example.apple.kindee;
+package com.example.apple.kindee.Controller;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.example.apple.kindee.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -10,10 +11,20 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class activity_map_detail extends FragmentActivity implements OnMapReadyCallback {
+public class MapDetailActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Bundle bundle;
 
+
+    int Res_id;
+    String Res_name ;
+    String Res_detail ;
+    String Res_img_path ;
+    Double Res_latitude;
+    Double Res_longitude ;
+    int Type_id ;
+    String Type_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +33,17 @@ public class activity_map_detail extends FragmentActivity implements OnMapReadyC
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        bundle = getIntent().getExtras();
+
+        Res_id = bundle.getInt("Res_id");
+        Res_name = bundle.getString("Res_name");
+         Res_detail = bundle.getString("Res_detail");
+        Res_img_path = bundle.getString("Res_img_path");
+        Res_latitude = bundle.getDouble("Res_latitude");
+        Res_longitude = bundle.getDouble("Res_longitude");
+        Type_id = bundle.getInt("Type_id");
+        Type_name = bundle.getString("Type_name");
     }
 
 
@@ -39,8 +61,11 @@ public class activity_map_detail extends FragmentActivity implements OnMapReadyC
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng sydney = new LatLng(Res_latitude, Res_longitude);
+        mMap.moveCamera(CameraUpdateFactory//13.2812492,100.9264413
+                .newLatLngZoom(sydney, 16));
+
+        mMap.addMarker(new MarkerOptions().position(sydney).title(Res_name));
+       // mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }

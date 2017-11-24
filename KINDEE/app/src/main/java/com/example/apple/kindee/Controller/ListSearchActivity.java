@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.apple.kindee.Controller.adapter.ListSearchAdapter;
 import com.example.apple.kindee.Model.Resturant;
 import com.example.apple.kindee.R;
 import com.google.gson.Gson;
@@ -32,7 +33,8 @@ public class ListSearchActivity extends Activity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    String Res_name ;
+    private String Res_name ;
+    private int User_id;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,7 @@ public class ListSearchActivity extends Activity {
         tv_head = (TextView) findViewById(R.id.tv_header_listsearch);
         tv_head.setText("ค้นหา : "+bundle.getString("search"));
         Res_name = bundle.getString("search");
-
+        User_id = bundle.getInt("User_id");
         String url="http://angsila.cs.buu.ac.th/~58160698/KINDEE_API/KINDEE/index.php/Resturant_controller/searchResturant";
         loginCallApi(url);
 
@@ -77,8 +79,8 @@ public class ListSearchActivity extends Activity {
 
                             // specify an adapter (see also next example)
                             //String[] myDataset= {"1","2","3"};
-                            Intent i=new Intent(getBaseContext(),DetailActivity.class);
-                            mAdapter = new ListSearchAdapter(result);
+                            //Intent i=new Intent(getBaseContext(),DetailActivity.class);
+                            mAdapter = new ListSearchAdapter(result,User_id);
 
                             mRecyclerView.setAdapter(mAdapter);
 
