@@ -19,10 +19,9 @@ public class SearchActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        edt_search=  (EditText) findViewById(R.id.edt_search_search);
+        edt_search =  (EditText) findViewById(R.id.edt_search_search);
     }
     public void callListSearchActivity(View v){
-
         Intent i = new Intent(this,ListSearchActivity.class);
         i.putExtra("search",edt_search.getText().toString());
         startActivity(i);

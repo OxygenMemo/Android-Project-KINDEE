@@ -18,5 +18,6 @@
     <string name="selectImg">Select Image</string>
     <string name="Type">ประเภท</string>
     <string name="search">ค้นหาร้านอาหารที่ชอบ</string>
+    <string name="title_activity_map_detail">Map</string>
 </resources>
 

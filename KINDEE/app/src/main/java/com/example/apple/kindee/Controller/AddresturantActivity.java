@@ -89,7 +89,7 @@ public class AddresturantActivity extends Activity{
 
         imageView = (ImageView)findViewById(R.id.imageView);
 
-        imageName = (EditText)findViewById(R.id.editTextImageName);
+        //imageName = (EditText)findViewById(R.id.editTextImageName);
 
         SelectImageGallery = (Button)findViewById(R.id.buttonSelect);
 
@@ -114,7 +114,7 @@ public class AddresturantActivity extends Activity{
             @Override
             public void onClick(View view) {
 
-                GetImageNameEditText = imageName.getText().toString();
+                //GetImageNameEditText = imageName.getText().toString();
                 EditText edt_Res_name = (EditText) findViewById(R.id.edt_Resname_Addresturant);
                 EditText edt_Res_comment = (EditText) findViewById(R.id.edt_comment_addresturant);
 
@@ -147,8 +147,8 @@ public class AddresturantActivity extends Activity{
             try {
 
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-
-                imageView.setImageBitmap(bitmap);
+                bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth()/4,bitmap.getHeight()/4,false);
+                imageView.setImageBitmap(Bitmap.createScaledBitmap(bitmap,200,200,false));
 
             } catch (IOException e) {
 
@@ -193,7 +193,7 @@ public class AddresturantActivity extends Activity{
 
                         Gson gson = gsonBuilder.create();
                         Type []types = gson.fromJson(response.toString(),Type[].class);
-                        Toast.makeText(getBaseContext(),types[0].Type_id+"",Toast.LENGTH_SHORT).show();
+
                         list = Arrays.asList(types);
 
                         spinner2 = (Spinner) findViewById(R.id.spinner);
@@ -263,7 +263,7 @@ public class AddresturantActivity extends Activity{
 
                 HashMap<String,String> HashMapParams = new HashMap<String,String>();
 
-                HashMapParams.put("image_name", GetImageNameEditText);
+                HashMapParams.put("image_name", "no");
 
                 HashMapParams.put("image_path", ConvertImage);
                 int indexselect=1;

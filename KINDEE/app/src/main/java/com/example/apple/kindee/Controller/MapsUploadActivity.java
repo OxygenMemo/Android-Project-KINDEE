@@ -1,10 +1,19 @@
 package com.example.apple.kindee.Controller;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
+import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +22,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.apple.kindee.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.Places;
@@ -20,9 +42,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class MapsUploadActivity extends FragmentActivity implements
         GoogleMap.OnCameraMoveStartedListener,
@@ -34,10 +59,24 @@ public class MapsUploadActivity extends FragmentActivity implements
     private GoogleMap mMap;
     private GeoDataClient mGeoDataClient;
     private PlaceDetectionClient mPlaceDetectionClient;
-    private  double x;
-    private  double y;
+    private double x;
+    private double y;
     private Marker marker;
     // PlaceDetectionClient
+    LocationRequest mLocationRequest;
+    GoogleApiClient mGoogleApiClient;
+
+    LatLng latLng;
+    GoogleMap mGoogleMap;
+    SupportMapFragment mFragment;
+    Marker currLocationMarker;
+    private static final int REQUEST_CHECK_SETTINGS = 0x1;
+
+    private FusedLocationProviderClient mFusedLocationClient;
+    private LocationCallback mLocationCallback;
+    private LocationSettingsRequest mLocationSettingsRequest;
+    private SettingsClient mSettingsClient;
+    Boolean mRequestingLocationUpdates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +87,7 @@ public class MapsUploadActivity extends FragmentActivity implements
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //startLocationUpdates();
 
 
     }
@@ -75,14 +115,12 @@ public class MapsUploadActivity extends FragmentActivity implements
         mMap.moveCamera(CameraUpdateFactory//13.2812492,100.9264413
                 .newLatLngZoom(new LatLng(13.2812492, 100.9264413), 14));
         //mMap.addMarker(new MarkerOptions().position(new LatLng(-33.87365, 151.20689)).title("g"));
-        if(x != 0 || y != 0 ){
-            mMap.addMarker(new MarkerOptions().position(new LatLng(x,y)));
-        }
+
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 mMap.clear();
-                LatLng click = new LatLng(latLng.latitude,latLng.longitude);
+                LatLng click = new LatLng(latLng.latitude, latLng.longitude);
                 MarkerOptions mk = new MarkerOptions().position(click).title("myclick");
                 //Toast.makeText(getBaseContext(),latLng.latitude+" "+latLng.longitude,Toast.LENGTH_SHORT).show();
                 x = latLng.latitude;
@@ -90,6 +128,8 @@ public class MapsUploadActivity extends FragmentActivity implements
                 marker = mMap.addMarker(mk);
             }
         });
+
+
     }
 
     @Override
@@ -105,36 +145,7 @@ public class MapsUploadActivity extends FragmentActivity implements
             //Toast.makeText(this, "The app moved the camera.", Toast.LENGTH_SHORT).show();
         }
     }
-    /*
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
 
-        switch (event.getAction()) {
-
-            case MotionEvent.ACTION_DOWN:
-                //mMap.clear();
-                LatLng click = new LatLng(event.getX(),event.getY());
-                MarkerOptions mk = new MarkerOptions().position(click).title("myclick");
-                Toast.makeText(this,event.getX()+" "+event.getY(),Toast.LENGTH_SHORT).show();
-                marker = mMap.addMarker(mk);
-
-                marker.setTag(0);
-
-                break;
-
-            case MotionEvent.ACTION_UP:
-
-                LatLng click2 = new LatLng(event.getX(),event.getY());
-                marker = mMap.addMarker(new MarkerOptions().position(click2).title("myclick"));
-                Toast.makeText(this,event.getX()+" "+event.getY(),Toast.LENGTH_SHORT).show();
-                marker.setTag(0);
-
-                break;
-
-        }
-        return super.dispatchTouchEvent(event);
-    }
-    */
     @Override
     public void onCameraMove() {
         //Toast.makeText(this, "The camera is moving.", Toast.LENGTH_SHORT).show();
@@ -157,6 +168,14 @@ public class MapsUploadActivity extends FragmentActivity implements
         setResult(2,i);
         finish();
     }
+
+
+
+
+    public boolean checkLocationPermission(){
+       return  true;
+    }
+
 
 
 

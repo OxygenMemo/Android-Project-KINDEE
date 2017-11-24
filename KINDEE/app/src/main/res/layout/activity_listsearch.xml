@@ -4,8 +4,17 @@
     android:layout_height="match_parent"
     android:padding="50dp">
 
+
     <TextView
+        android:textSize="25dp"
         android:id="@+id/tv_header_listsearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cv_listResturant_listsearch"
+        android:layout_below="@id/tv_header_listsearch"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 </RelativeLayout>
