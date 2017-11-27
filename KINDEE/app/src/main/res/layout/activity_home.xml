@@ -15,7 +15,8 @@
             android:text="@string/WhatToEat"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:onClick="callRandom"/>
 
         <Button
             android:id="@+id/btn_search_home"
@@ -31,6 +32,7 @@
             android:id="@+id/btn_FavoriteRes_home"
             android:layout_below="@id/btn_search_home"
             android:textSize="25dp"
+            android:onClick="callFavoriteList"
             android:text="@string/FavoriteRes"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"

@@ -9,7 +9,8 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.apple.kindee.Controller.MapsUploadActivity" />
+    tools:context="com.example.apple.kindee.Controller.MapsUploadActivity" />showMyLocation_mapupload
+
     <Button
         android:text="SELECT"
         android:onClick="send_location"
@@ -18,4 +19,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:text="My location"
+        android:onClick="showMyLocation_upload"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

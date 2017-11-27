@@ -9,7 +9,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-
+import android.app.SearchManager;
+import android.support.v4.view.MenuItemCompat;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +25,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +39,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.apple.kindee.Controller.adapter.ListCommentAdapter;
 import com.example.apple.kindee.Controller.adapter.ListSearchAdapter;
 import com.example.apple.kindee.Model.Comment;
+import com.example.apple.kindee.Model.Favorite;
 import com.example.apple.kindee.Model.ResRate;
 import com.example.apple.kindee.Model.Result;
 import com.example.apple.kindee.Model.ResultLogin;
@@ -68,14 +73,23 @@ public class DetailActivity extends AppCompatActivity{
     private String url_getResRate = "http://angsila.cs.buu.ac.th/~58160698/KINDEE_API/KINDEE/index.php/Rate_controller/getResRate/";
     private String url_getcommand = "http://angsila.cs.buu.ac.th/~58160698/KINDEE_API/KINDEE/index.php/Comment_controller/getAllCommentWithResId/";
     private String url_addComment = "http://angsila.cs.buu.ac.th/~58160698/KINDEE_API/KINDEE/index.php/Comment_controller/addComment";
+    private String url_RatingRes =  "http://angsila.cs.buu.ac.th/~58160698/KINDEE_API/KINDEE/index.php/Rate_controller/RatingRes";
+    private String url_getRateUser = "http://angsila.cs.buu.ac.th/~58160698/KINDEE_API/KINDEE/index.php/Rate_controller/getRateUser/";
+    private String url_addFavorite = "http://angsila.cs.buu.ac.th/~58160698/KINDEE_API/KINDEE/index.php/FavoritResturants_controller/Favorit";
+    private String url_checkFavorite = "http://angsila.cs.buu.ac.th/~58160698/KINDEE_API/KINDEE/index.php/FavoritResturants_controller/checkFavorite/";
+
     private String comment_text;
+    private RatingBar Rateinput;
+
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         //Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(myToolbar);
+        //setSupportActionBar();
+
+
         bundle = getIntent().getExtras();
 
         int Res_id = bundle.getInt("Res_id");
@@ -86,8 +100,8 @@ public class DetailActivity extends AppCompatActivity{
         Double Res_longitude = bundle.getDouble("Res_longitude");
         int Type_id = bundle.getInt("Type_id");
         String Type_name = bundle.getString("Type_name");
-
-        Toast.makeText(this,bundle.getInt("User_id")+"",Toast.LENGTH_SHORT).show();
+        int User_id = bundle.getInt("User_id");
+        //Toast.makeText(this,bundle.getInt("User_id")+"",Toast.LENGTH_SHORT).show();
         tv_Type_name_detail = (TextView) findViewById(R.id.tv_Type_name_detail);
         tv_head_detail = (TextView) findViewById(R.id.tv_head_detail);
         img_img_detail = (ImageView) findViewById(R.id.img_img_detail);
@@ -96,33 +110,44 @@ public class DetailActivity extends AppCompatActivity{
         tv_Type_name_detail.setText("ประเภท : "+Type_name);
         new DetailActivity.DownLoadImageTask(img_img_detail).execute(Res_img_path);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner_rate_detail);
+        Rateinput = findViewById(R.id.rating_input_detail);
+        Rateinput.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                RateingRes(url_RatingRes);
 
-        ArrayList<String> arr_Rate = new ArrayList<>();
-        arr_Rate.add(" ");
-        arr_Rate.add("1");
-        arr_Rate.add("2");
-        arr_Rate.add("3");
-        arr_Rate.add("4");
-        arr_Rate.add("5");
-        List<String> list = arr_Rate;
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getBaseContext(),
-                android.R.layout.simple_spinner_item, list);
+            }
+        });
 
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-        //spinner.setSelection(2);
 
         getResRate(url_getResRate+Res_id);
         getCommentWithResId(url_getcommand+Res_id);
+        getRateUser(url_getRateUser+Res_id+"/"+User_id);
 
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) { switch(item.getItemId()) {
+        case R.id.plus_icon:
+
+                Favorite(url_addFavorite,item);
+            return(true);
+    }
+        return(super.onOptionsItemSelected(item));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
+        MenuItem item = menu.findItem(R.id.plus_icon);
+        getFavoriteStatus(url_checkFavorite+bundle.getInt("Res_id")+"/"+bundle.getInt("User_id"),item);
+        return true;
     }
 
     public void callMapDetailSearch(View v){
         Intent i = new Intent(this,MapDetailActivity.class);
         i.putExtra("Res_id",bundle.getInt("Res_id"));
-        i.putExtra("Res_id",bundle.getString("Res_name"));
+        i.putExtra("Res_name",bundle.getString("Res_name"));
         i.putExtra("Res_detail",bundle.getString("Res_detail"));
         i.putExtra("Res_img_path",bundle.getString("Res_img_path"));
         i.putExtra("Res_latitude",bundle.getDouble("Res_latitude"));
@@ -136,6 +161,95 @@ public class DetailActivity extends AppCompatActivity{
         EditText editText =findViewById(R.id.edt_comment_detail);
         this.comment_text =editText.getText().toString();
         AddCommentCallApi(url_addComment);
+    }
+    public void Favorite(String URL, final MenuItem item){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        final TextView tv= (TextView) findViewById(R.id.tv_Register_register);
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        try {
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            gsonBuilder.setPrettyPrinting();
+
+                            Gson gson = gsonBuilder.create();
+                            Favorite favorite = gson.fromJson(response.toString(),Favorite.class);
+                            if(favorite.status == true){
+                                item.setIcon(R.drawable.ic_checked);
+                            }else{
+                                item.setIcon(R.drawable.ic_add_plus_circular_button);
+                            }
+
+
+
+                        }catch (Exception e){
+                            Toast.makeText(getBaseContext(),"fail other case",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Toast.makeText(getBaseContext(),"internet not connect",Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Rate_number", Math.round(Rateinput.getRating())+"");
+                params.put("Res_id",bundle.getInt("Res_id")+"");
+                params.put("User_id",bundle.getInt("User_id")+"");
+                return params;
+            }
+        };
+        queue.add(postRequest);
+    }
+    public void RateingRes(String URL){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        final TextView tv= (TextView) findViewById(R.id.tv_Register_register);
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        try {
+
+                            getResRate(url_getResRate+bundle.getInt("Res_id"));
+                        }catch (Exception e){
+                            Toast.makeText(getBaseContext(),"fail other case",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Toast.makeText(getBaseContext(),"internet not connect",Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Rate_number", Math.round(Rateinput.getRating())+"");
+                params.put("Res_id",bundle.getInt("Res_id")+"");
+                params.put("User_id",bundle.getInt("User_id")+"");
+                return params;
+            }
+        };
+        queue.add(postRequest);
     }
     public void AddCommentCallApi(String URL){
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -179,6 +293,46 @@ public class DetailActivity extends AppCompatActivity{
         };
         queue.add(postRequest);
     }
+    private void getFavoriteStatus(final String url,final MenuItem item){
+        //final TextView tv= (TextView) findViewById(R.id.tv_Register_register);
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+
+                new Response.Listener<String>() {
+                    Favorite favorite;
+                    @Override
+                    public void onResponse(String response) {
+
+                        // Display the first 500 characters of the response string.
+                        //tv.setText(response.toString());
+                        try {
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            gsonBuilder.setPrettyPrinting();
+
+                            Gson gson = gsonBuilder.create();
+                            favorite = gson.fromJson(response.toString(),Favorite.class);
+
+
+                            if(favorite.status){
+                                item.setIcon(R.drawable.ic_checked);
+                            }else{
+                                item.setIcon(R.drawable.ic_add_plus_circular_button);
+                            }
+
+                        }catch (Exception e){
+
+                            Toast.makeText(getBaseContext(),"fail other case",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getBaseContext(),"Internet not connect",Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(stringRequest);
+    }
     private void getCommentWithResId(final String url){
         //final TextView tv= (TextView) findViewById(R.id.tv_Register_register);
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -194,10 +348,7 @@ public class DetailActivity extends AppCompatActivity{
 
                             Gson gson = gsonBuilder.create();
                             Comment[] comments = gson.fromJson(response.toString(),Comment[].class);
-                            //Log.d("gggg",response.toString());
-                            //Log.d("gggg",bundle.getString("Res_id"));
-                            //Log.d("gggg",url);
-                            //tv.setText(result.result+"");
+
                             recyclerView = (RecyclerView) findViewById(R.id.cv_listcomment_detail);
 
                             recyclerView.setHasFixedSize(true);
@@ -235,13 +386,44 @@ public class DetailActivity extends AppCompatActivity{
 
                             Gson gson = gsonBuilder.create();
                             ResRate resRate = gson.fromJson(response.toString(),ResRate.class);
-                            //Log.d("gggg",response.toString());
-                            //Log.d("gggg",bundle.getString("Res_id"));
-                            //Log.d("gggg",url);
-                            //tv.setText(result.result+"");
-                            TextView tvResRate = findViewById(R.id.tv_Ras_rate_detail);
+
+                            RatingBar ResRate = findViewById(R.id.rating_Ras_rate_detail);
                             //คะแนน
-                            tvResRate.setText("คะแนน "+resRate.Rate_number);
+
+                            ResRate.setRating((float) resRate.Rate_number);
+                        }catch (Exception e){
+                            Toast.makeText(getBaseContext(),"fail other case",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getBaseContext(),"Internet not connect",Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(stringRequest);
+    }
+    private void getRateUser(final String url){
+        //final TextView tv= (TextView) findViewById(R.id.tv_Register_register);
+        RequestQueue queue = Volley.newRequestQueue(getBaseContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        //tv.setText(response.toString());
+                        try {
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            gsonBuilder.setPrettyPrinting();
+
+                            Gson gson = gsonBuilder.create();
+                            ResRate resRate = gson.fromJson(response.toString(),ResRate.class);
+
+                            RatingBar Rateinput = findViewById(R.id.rating_input_detail);
+                            //คะแนน
+
+                            Rateinput.setRating((float) resRate.Rate_number);
+
                         }catch (Exception e){
                             Toast.makeText(getBaseContext(),"fail other case",Toast.LENGTH_SHORT).show();
                         }

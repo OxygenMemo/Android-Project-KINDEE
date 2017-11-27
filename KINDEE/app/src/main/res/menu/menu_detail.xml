@@ -1,11 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/miProfile"
-        android:icon="@drawable/ic_icons8_plus"
-        app:showAsAction="ifRoom|withText"
-        android:title="Profile">
-
-    </item>
+   <item
+       android:id="@+id/plus_icon" android:icon="@drawable/ic_add_plus_circular_button" app:showAsAction="always"   android:title="AddFavorite"/>
 </menu>

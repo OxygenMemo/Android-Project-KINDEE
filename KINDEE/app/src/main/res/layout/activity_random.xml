@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="50dp">
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <TextView
+        android:textSize="15dp"
+        android:text="ระยะสุ่ม"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Spinner
+        android:id="@+id/spinner_lenght_random"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/number_of_km"
+        android:prompt="@string/Random"/>
+
+        <TextView
+            android:textSize="15dp"
+            android:text="กม"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <Button
+        android:text="gg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="callDetailActivity"
+        android:layout_marginBottom="100dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

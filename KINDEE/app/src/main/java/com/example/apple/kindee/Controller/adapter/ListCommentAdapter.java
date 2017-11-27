@@ -1,13 +1,11 @@
 package com.example.apple.kindee.Controller.adapter;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.apple.kindee.Controller.DetailActivity;
 import com.example.apple.kindee.Model.Comment;
 import com.example.apple.kindee.R;
 
@@ -37,7 +35,7 @@ public class ListCommentAdapter extends RecyclerView.Adapter<ListCommentAdapter.
                                                            int viewType) {
         // create a new view
         View v =  LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_cardview_listcommand, parent, false);
+                .inflate(R.layout.adapter_cardview_listcomment, parent, false);
 
         // set the view's size, margins, paddings and layout parameters
 

@@ -38,5 +38,14 @@ public class HomeActivity extends Activity {
         i.putExtra("User_fullname",User_fullname);
         startActivity(i);
     }
+    public void callFavoriteList(View view){
+        Intent i =new Intent(this,FavoriteListActivity.class);
+        i.putExtra("User_id",User_id);
+        startActivity(i);
+    }
+    public void callRandom(View view){
+        Intent i =new Intent(this,RandomActivity.class);
+        startActivity(i);
+    }
 
 }
